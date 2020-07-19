@@ -23,12 +23,26 @@ end
 
 """
     ad_minus_bc(a, b, c, d)
+
 Computes the determinant of a 2x2 matrix.
 """
 function ad_minus_bc(a::T, b::T, c::T, d::T) where {T}
     adhi, adlo = two_prod(a,d)
     bchi, bclo = two_prod(b,c)
-    return four_sum(adhi, adlo, -bchi, -bclo)
+    adhi, bchi = abs(adhi) < abs(bchi) ? (adhi, -bchi) : (-bchi, adhi)
+    adlo, bclo = abs(adlo) < abs(bclo) ? (adlo, -bclo) : (-bclo, adlo)
+    return ((adlo + bclo) + adhi) + bchi 
+end
+
+"""
+    ad_plus_bc(a, b, c, d)
+"""
+function ad_minus_bc(a::T, b::T, c::T, d::T) where {T}
+    adhi, adlo = two_prod(a,d)
+    bchi, bclo = two_prod(b,c)
+    adhi, bchi = abs(adhi) < abs(bchi) ? (adhi, bchi) : (bchi, adhi)
+    adlo, bclo = abs(adlo) < abs(bclo) ? (adlo, bclo) : (bclo, adlo)
+    return ((adlo + bclo) + adhi) + bchi 
 end
 
 
